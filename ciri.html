@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday, Ciri!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6e9f1; --bg2:#ffd9e6; --ink:#2a1840; --soft:#6b5580; --card:#fffafc; --accent:#e0457b; --gold:#f2a900;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#150f33; --bg2:#2b1650; --ink:#f4eeff; --soft:#b9a9d9; --card:#241a4a; --accent:#ff8fb3; --gold:#ffd166; }
+}
+:root[data-theme="dark"]{ --bg:#150f33; --bg2:#2b1650; --ink:#f4eeff; --soft:#b9a9d9; --card:#241a4a; --accent:#ff8fb3; --gold:#ffd166; }
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+.sky{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 0%,var(--bg2),var(--bg) 70%);pointer-events:none}
+.star{position:fixed;width:3px;height:3px;border-radius:50%;background:var(--gold);opacity:.5;animation:tw 3s infinite ease-in-out;pointer-events:none;z-index:0}
+@keyframes tw{50%{opacity:.1;transform:scale(.6)}}
+main{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:48px 22px 64px}
+.hero{text-align:center;padding-top:24px}
+h1{font-size:clamp(2.6rem,12vw,5.4rem);line-height:.98;margin:0;font-weight:800;letter-spacing:-.03em}
+h1 span{display:block;font-family:Caveat,cursive;font-weight:700;color:var(--accent);font-size:.55em;letter-spacing:0;margin-bottom:.1em}
+.sub{color:var(--soft);max-width:34ch;margin:18px auto 0;font-size:1.1rem}
+.cake{margin:34px auto 6px;width:230px;cursor:pointer;background:none;border:0;padding:0;-webkit-tap-highlight-color:transparent}
+.cake:focus-visible{outline:3px solid var(--accent);outline-offset:8px;border-radius:12px}
+.flame{transform-origin:50% 100%;animation:fl .5s infinite alternate ease-in-out;transition:opacity .4s,transform .4s}
+@keyframes fl{to{transform:scale(1.12,.9) rotate(3deg)}}
+.out .flame{opacity:0;animation:none;transform:scale(.2)}
+.smoke{opacity:0;transition:opacity .4s}.out .smoke{opacity:.7}
+.hint{font-family:Caveat,cursive;font-size:1.6rem;color:var(--gold);min-height:2.2rem;margin:4px 0 0}
+.wishes{margin-top:48px;display:grid;gap:22px}
+.note{background:var(--card);border-radius:6px 22px 8px 22px;padding:22px 24px;box-shadow:0 10px 30px rgba(40,10,70,.18);max-width:520px;opacity:0;transform:translateY(24px) rotate(var(--r));transition:opacity .7s,transform .7s}
+.note:nth-child(odd){margin-right:auto;--r:-1.2deg}.note:nth-child(even){margin-left:auto;--r:1.4deg;border-radius:22px 8px 22px 6px}
+.on .note{opacity:1;transform:rotate(var(--r))}
+.on .note:nth-child(2){transition-delay:.25s}.on .note:nth-child(3){transition-delay:.5s}.on .note:nth-child(4){transition-delay:.75s}
+.note{min-height:290px;display:flex;flex-direction:column;justify-content:flex-end;background:linear-gradient(180deg,rgba(20,10,40,.05) 20%,rgba(20,10,40,.82)),var(--img) center 35%/cover no-repeat;color:#fff;overflow:hidden}
+.note h2{margin:0 0 6px;font-size:1.3rem;color:#ffd166;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.note p{margin:0;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.7)}
+.box{margin:48px auto 0;max-width:520px;background:var(--card);border-radius:22px;padding:24px;box-shadow:0 10px 30px rgba(40,10,70,.18)}
+.box h2{margin:0 0 4px;font-size:1.3rem;color:var(--accent)}
+.box p{margin:0 0 14px;color:var(--soft)}
+.box input,.box textarea{width:100%;font:inherit;color:var(--ink);background:transparent;border:2px solid var(--soft);border-radius:12px;padding:10px 12px;margin-bottom:10px}
+.box textarea{min-height:110px;resize:vertical}
+.box input:focus-visible,.box textarea:focus-visible,.btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn{display:inline-block;text-decoration:none;margin-right:8px}
+.btn.alt{background:transparent;color:var(--accent);border:2px solid var(--accent);border-radius:999px;padding:10px 22px;font:inherit;font-weight:bold}
+.status{margin-top:12px;font-family:Caveat,cursive;font-size:1.5rem;color:var(--gold);min-height:1.6rem}
+.sign{margin-top:44px;text-align:center;font-family:Caveat,cursive;font-size:2rem;opacity:0;transition:opacity 1s 1.1s}
+.on .sign{opacity:1}
+.locked{text-align:center;color:var(--soft);margin-top:40px}
+.on .locked{display:none}
+/* The canvas covers the whole screen, but taps pass through it */
+canvas{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:5;
+}
+
+/* Button style (pink to orange gradient) */
+button{
+  font:inherit;
+  cursor:pointer;
+  border:0;
+  border-radius:999px;
+  padding:12px 26px;
+  color:#fff;
+  background:linear-gradient(90deg,#e91e8c,#ff9a3c);
+  font-weight:bold;
+}
+button:hover{filter:brightness(1.08)}
+@media (prefers-reduced-motion:reduce){.flame,.star{animation:none}.note,.sign{transition:none}}
+</style>
+</head>
+<body>
+<div class="sky"></div>
+<canvas id="c"></canvas>
+<canvas id="fx"></canvas>
+<main id="m">
+  <section class="hero">
+    <h1><span>it’s your day,</span>Happy Birthday, ❤️cute 🥰 Ciri❤️</h1>
+    <p class="sub">To my best friend, the one who makes every ordinary day feel like a celebration.</p>
+    <button class="cake" id="cake" aria-label="Blow out the candle and make a wish">
+      <svg viewBox="0 0 230 210" role="img" aria-hidden="true">
+        <g class="smoke"><path d="M115 40c-8-10 8-16 0-28" stroke="#b9a9d9" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+        <g class="flame"><path d="M115 14c14 18 12 30 0 34-12-4-14-16 0-34z" fill="#ff9a1f"/><path d="M115 28c6 8 6 14 0 17-6-3-6-9 0-17z" fill="#ffe27a"/></g>
+        <rect x="111" y="44" width="8" height="34" rx="3" fill="#fff"/><rect x="111" y="52" width="8" height="5" fill="#ff8fb3"/><rect x="111" y="64" width="8" height="5" fill="#ff8fb3"/>
+        <rect x="55" y="78" width="120" height="48" rx="12" fill="#ff8fb3"/>
+        <path d="M55 96q15 14 30 0t30 0 30 0 30 0v-6a12 12 0 0 0-12-12H67a12 12 0 0 0-12 12z" fill="#fff"/>
+        <rect x="30" y="126" width="170" height="62" rx="14" fill="#c77dff"/>
+        <path d="M30 146q21 16 42 0t42 0 42 0 42 0v-8a12 12 0 0 0-12-12H42a12 12 0 0 0-12 12z" fill="#fff"/>
+        <circle cx="70" cy="166" r="5" fill="#ffd166"/><circle cx="115" cy="170" r="5" fill="#ffd166"/><circle cx="160" cy="166" r="5" fill="#ffd166"/>
+        <rect x="14" y="188" width="202" height="10" rx="5" fill="#8a5cc7"/>
+      </svg>
+    </button>
+    <p class="hint" id="hintText">Tap the candle and make a wish</p>
+  </section>
+  <p class="locked">Your birthday wishes are waiting…</p>
+  <section class="wishes" aria-label="Birthday wishes">
+    <!-- Replace each photo path below with your own image file, or the embedded data -->
+    <article class="note" style="--img:url('Screenshot 2026-11-10 221728 copy.jpg')"><h2>You’re one of a kind</h2><p>Ciri, there’s nobody else like you. Your laugh, your courage, and your kindness make the whole world a little brighter.</p></article>
+    <article class="note" style="--img:url('Screenshot 2026-11-12 231831.jpg')"><h2>Thank you for being you</h2><p>For every secret kept, every late-night chat, and every time you showed up without being asked. I’m so lucky you’re my best friend.</p></article>
+    <article class="note" style="--img:url('Adobe Express - file.jpg')"><h2>My wish for you</h2><p>May this year bring you big adventures, quiet joys, and every dream you’ve been holding onto. You deserve all of it and more.</p></article>
+    <article class="note" style="--img:url('hug.jpg')"><h2>Here’s to us</h2><p> Whatever comes , we'll stay together. .   ok ciri</p></article>
+  </section>
+  <section class="box" aria-labelledby="wt">
+    <h2 id="wt">Make a birthday wish.</h2>
+    <p>Write her a message.</p>
+    <textarea id="wish" placeholder=" you..." maxlength="600" aria-label="Your wish"></textarea>
+    <button class="btn" id="send" type="button">Send wish</button>
+    <a class="btn alt" id="sms" href="#" style="display:none">Text it to her phone</a>
+    <div class="status" id="status" role="status"></div>
+  </section>
+  <p class="sign">With all my love, your BFF</p>
+</main>
+<script>
+(function(){
+  for(var i=0;i<28;i++){var s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';s.style.animationDelay=(Math.random()*3)+'s';document.body.appendChild(s);}
+  var m=document.getElementById('m'),cake=document.getElementById('cake'),hint=document.getElementById('hintText'),cv=document.getElementById('c'),ctx=cv.getContext('2d'),parts=[],run=false;
+  function size(){cv.width=innerWidth;cv.height=innerHeight}size();addEventListener('resize',size);
+  var cols=['#ff8fb3','#ffd166','#c77dff','#7ee0d0','#ffffff'];
+  function burst(){
+    for(var i=0;i<140;i++){parts.push({x:innerWidth/2,y:innerHeight*.35,vx:(Math.random()-.5)*14,vy:Math.random()*-12-2,r:Math.random()*6+3,c:cols[i%cols.length],a:Math.random()*6,l:160});}
+    if(!run){run=true;requestAnimationFrame(tick);}
+  }
+  function tick(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    parts=parts.filter(function(p){return p.l>0});
+    parts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.vy+=.28;p.vx*=.99;p.a+=.2;p.l--;ctx.save();ctx.globalAlpha=Math.min(1,p.l/40);ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.fillStyle=p.c;ctx.fillRect(-p.r/2,-p.r/4,p.r,p.r/2);ctx.restore();});
+    if(parts.length){requestAnimationFrame(tick)}else{run=false}
+  }
+
+  // Phone that receives wishes by text: digits only with country code, e.g. 919876543210. Empty = sender picks the contact.
+  var PHONE='';
+  var send=document.getElementById('send'),sms=document.getElementById('sms'),st=document.getElementById('status'),dbp=null;
+  try{dbp=window.claude&&window.claude.use?window.claude.use('db'):null}catch(e){}
+  function msg(){return 'Birthday wish for Ciri: '+document.getElementById('wish').value.trim()}
+  send.addEventListener('click',function(){
+    var w=document.getElementById('wish').value.trim();
+    if(!w){st.textContent='Write your wish first.';return}
+    sms.href='sms:'+(PHONE?'+'+PHONE:'')+'?&body='+encodeURIComponent(msg());
+    sms.style.display='inline-block';
+    send.disabled=true;
+    Promise.resolve(dbp).then(function(db){
+      if(!db)throw 0;
+      return db.collection('wishes').add({wish:w,at:Date.now()});
+    }).then(function(){st.textContent='Wish saved! Tap the button to text it too.';burst()})
+      .catch(function(){st.textContent='Tap "Text it to her phone" to send your wish.'})
+      .then(function(){send.disabled=false});
+  });
+
+  cake.addEventListener('click',function(){
+    if(m.classList.contains('out')){burst();return;}
+    m.classList.add('out','on');
+    cake.classList.add('out');
+    cake.querySelector('svg').classList.add('out');
+    hint.textContent='Wish made! Happy birthday, Ciri!';
+    if(!matchMedia('(prefers-reduced-motion: reduce)').matches)burst();
+    setTimeout(function(){document.querySelector('.wishes').scrollIntoView({behavior:'smooth',block:'start'})},1400);
+  });
+})();
+</script>
+<script>
+var cv = document.getElementById('fx');
+var cx = cv.getContext('2d');
+var bits = [];
+var run = false;
+
+// Keep the canvas the same size as the screen
+function size(){
+  cv.width = innerWidth;
+  cv.height = innerHeight;
+}
+addEventListener('resize', size);
+size();
+
+// Create 140 pieces of confetti above the screen
+function boom(){
+  var cols = ['#e91e8c','#ff9a3c','#ffd93d','#6bcB77','#4d96ff','#c77dff'];
+  for(var i = 0; i < 140; i++){
+    bits.push({
+      x: Math.random() * cv.width,      // start position across the screen
+      y: -20 - Math.random() * 200,     // start above the top edge
+      vx: Math.random() * 4 - 2,        // sideways drift
+      vy: Math.random() * 3 + 2,        // falling speed
+      s: Math.random() * 8 + 4,         // size
+      c: cols[i % cols.length],         // color
+      r: Math.random() * 6              // starting rotation
+    });
+  }
+  if(!run){ run = true; tick(); }       // start the animation if it isn't running
+}
+
+// Move and draw every piece, frame by frame
+function tick(){
+  cx.clearRect(0, 0, cv.width, cv.height);
+
+  // Remove pieces that have fallen off the bottom
+  bits = bits.filter(function(b){ return b.y < cv.height + 20 });
+
+  bits.forEach(function(b){
+    b.x += b.vx;
+    b.y += b.vy;
+    b.r += 0.1;                          // spin
+    cx.fillStyle = b.c;
+    cx.save();
+    cx.translate(b.x, b.y);
+    cx.rotate(b.r);
+    cx.fillRect(-b.s/2, -b.s/4, b.s, b.s/2);
+    cx.restore();
+  });
+
+  if(bits.length){
+    requestAnimationFrame(tick);         // keep animating
+  } else {
+    run = false;                         // all gone, stop and clear
+    cx.clearRect(0, 0, cv.width, cv.height);
+  }
+}
+
+// Tapping the candle makes confetti
+document.getElementById('cake').addEventListener('click', boom);
+
+// Also fire once automatically 0.6 seconds after the page loads
+setTimeout(boom, 600);
+</script>
+</body>
+</html>
